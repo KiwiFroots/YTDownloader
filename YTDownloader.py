@@ -1,7 +1,7 @@
 import youtube_dl
 import shutil
 
-savedir = "F:\\Google Drive\\Projects\\Scripts\\YouTube Downloader\\Music\\"
+savedir = ""
 
 ydl_opts = {
     'format': 'bestaudio/best',
@@ -12,6 +12,7 @@ ydl_opts = {
         'preferredquality': '192',
     }],
 }
+
 def confirmTitle(title_raw, title, artist):
     confirm = input("Is this correct?\n\n(Raw Video Title: {})\n\nTitle: {}\nArtist: {}\n\n(y/n):".format(title_raw, title, artist))
     if confirm == "y":
@@ -21,12 +22,13 @@ def confirmTitle(title_raw, title, artist):
         format = new_title
     return format
 
+
 videos = open(("videos.txt"), "r").readlines()
-for video in range(0, (len(videos))): #iterate through each vid.
-    link = videos[video][:-1] #trim \n off each result
+for video in range(0, (len(videos))):
+    link = videos[video][:-1]
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         print("Getting Meta Data for {}".format(link))
-        meta = ydl.extract_info(link) #get the meta data
+        meta = ydl.extract_info(link)
         print("{} is uploaded by '{}', and has {} views.".format(meta['title'], meta['uploader'], meta['view_count']))
         ydl.download([link])
 		
